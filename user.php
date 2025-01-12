@@ -1,51 +1,60 @@
-<?php
-include "koneksi.php"; // Pastikan koneksi database
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-$sql = "SELECT * FROM gallery ORDER BY tanggal DESC";
-$hasil = $conn->query($sql);
-?>
-<div class="container">
-    <div class="justify-content-between align-items-center mb-4">
-        <h1 class="text-primary">Manajemen User</h1>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#modalTambah">
-            <i class="bi bi-plus-lg"></i> Tambah User
-        </button>
-    </div>         
+</head>
+<body>
     
-    <!-- Awal Modal Tambah -->
-    <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah User</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <div class="container">
+        <div class="justify-content-between align-items-center mb-4">
+            <h1 class="text-primary">Manajemen User</h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                <i class="bi bi-plus-lg"></i> Tambah User
+            </button>
+        </div>         
+        
+        <!-- Awal Modal Tambah -->
+        <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah User</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput" class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Masukkan Username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput2" class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="Masukkan Password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput2" class="form-label">Foto</label>
+                                <input type="file" class="form-control" name="foto">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" value="simpan" name="simpan" class="btn btn-primary">
+                        </div>
+                    </form>
                 </div>
-                <form method="post" action="" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" placeholder="Masukkan Username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput2" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Masukkan Password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formGroupExampleInput2" class="form-label">Foto</label>
-                            <input type="file" class="form-control" name="foto">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" value="simpan" name="simpan" class="btn btn-primary">
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 <script>
 $(document).ready(function(){
     load_data();
@@ -77,6 +86,7 @@ $(document).ready(function(){
 
 <?php
 include "upload_foto.php";
+include "koneksi.php";
 
 //jika tombol simpan diklik
 if (isset($_POST['simpan'])) {
