@@ -62,8 +62,6 @@ $(document).ready(function(){
 });
 </script>
 
-
-
 <?php
 include "upload_foto.php";
 

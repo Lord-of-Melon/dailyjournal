@@ -1,3 +1,9 @@
+<?php
+include "koneksi.php"; // Pastikan koneksi database
+
+$sql = "SELECT * FROM gallery ORDER BY tanggal DESC";
+$hasil = $conn->query($sql);
+?>
 <div class="container">
     <div class="justify-content-between align-items-center mb-4">
         <h1 class="text-primary">Manajemen User</h1>
