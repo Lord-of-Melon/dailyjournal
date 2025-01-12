@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php"; // Pastikan koneksi database
 
-$sql = "SELECT * FROM article ORDER BY tanggal DESC";
+$sql = "SELECT * FROM gallery ORDER BY tanggal DESC";
 $hasil = $conn->query($sql);
 ?>
 
@@ -10,7 +10,7 @@ $hasil = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Artikel</title>
+    <title>Daftar Gallery</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -41,7 +41,6 @@ $hasil = $conn->query($sql);
         .card {
             border: none;
             border-radius: 10px;
-            background-color: #f0f0f0;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
@@ -49,8 +48,14 @@ $hasil = $conn->query($sql);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
         }
         .card img {
-            height: 200px;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Membuat gambar tetap dalam rasio 1:1 */
             object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border: 5px solid #ffffff; /* Bingkai putih di sekitar gambar */
+            padding: 5px; /* Jarak antara gambar dan bingkai */
+            background-color: #eaeaea; /* Warna background bingkai */
         }
         /* Footer */
         .footer {
@@ -62,17 +67,29 @@ $hasil = $conn->query($sql);
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">My Articles</a>
-            
+    <div class="container">
+        <a class="navbar-brand" href="#">My Gallery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Article</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index_gallery.php">Gallery</a>
+                </li>
+            </ul>
         </div>
+    </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="text-center py-5">
         <div class="container">
-            <h1>Selamat Datang di My Articles</h1>
-            <p class="lead">Kumpulan artikel terbaru dan menarik</p>
+            <h1>Selamat Datang di My Gallery</h1>
+            <p class="lead">Kumpulan gambar terbaru dan menarik</p>
         </div>
     </header>
 
@@ -86,46 +103,13 @@ $hasil = $conn->query($sql);
                         <?php if (!empty($row["gambar"]) && file_exists('img/' . $row["gambar"])) { ?>
                             <img src="img/<?= $row["gambar"] ?>" class="card-img-top" alt="<?= htmlspecialchars($row["judul"]) ?>">
                         <?php } else { ?>
-                            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Placeholder">
+                            <img src="https://via.placeholder.com/400" class="card-img-top" alt="Placeholder">
                         <?php } ?>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title"><?= htmlspecialchars($row["judul"]) ?></h5>
-                            <p class="card-text"><?= substr(htmlspecialchars($row["isi"]), 0, 100) ?>...</p>
-                            <div class="mt-auto">
-                                <!-- Button Trigger Modal -->
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalArticle<?= $row["id"] ?>">
-                                    Baca Selengkapnya
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Modal Detail Article -->
-                <div class="modal fade" id="modalArticle<?= $row["id"] ?>" tabindex="-1" aria-labelledby="modalLabel<?= $row["id"] ?>" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header bg-primary text-white">
-                                <h5 class="modal-title" id="modalLabel<?= $row["id"] ?>"><?= htmlspecialchars($row["judul"]) ?></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="text-center mb-4">
-                                    <?php if (!empty($row["gambar"]) && file_exists('img/' . $row["gambar"])) { ?>
-                                        <img src="img/<?= $row["gambar"] ?>" class="img-fluid rounded" style="max-height: 400px; object-fit: cover;" alt="<?= htmlspecialchars($row["judul"]) ?>">
-                                    <?php } else { ?>
-                                        <img src="https://via.placeholder.com/600x400" class="img-fluid rounded" alt="Placeholder">
-                                    <?php } ?>
-                                </div>
-                                <p><?= nl2br(htmlspecialchars($row["isi"])) ?></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Modal -->
             <?php } ?>
         </div>
     </section>
